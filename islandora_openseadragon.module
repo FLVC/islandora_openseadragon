@@ -126,7 +126,7 @@ function islandora_openseadragon_preprocess_islandora_openseadragon_viewer(&$var
       '!pid' => $variables['fedora_object']->id,
     ));
     module_load_include('inc', 'islandora_paged_content', 'includes/highlighting');
-    $highlighting_info = islandora_paged_content_perform_solr_highlighting_query($_GET['solr']['query'], $params);
+    $highlighting_info = islandora_paged_content_perform_solr_highlighting_query(urldecode($_GET['solr']['query']), $params);
     $highlights = array();
 
     foreach ($highlighting_info as $pid => $info) {
