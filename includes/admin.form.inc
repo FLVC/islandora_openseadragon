@@ -211,6 +211,15 @@ function islandora_openseadragon_admin($form, &$form_state) {
     '#default_value' => $settings['zoomPerSecond'],
     '#description' => t('The factor by which images should zoom every second when the zoom buttons are held down.'),
   );
+  // Default zoom level.
+  $form['islandora_openseadragon_settings']['defaultZoomLevel'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Default zoom level'),
+    '#size' => 10,
+    '#element_validate' => array('element_validate_number'),
+    '#default_value' => $settings['defaultZoomLevel'],
+    '#description' => t('The zoom level used by default for loaded OpenSeadragon viewers.'),
+  );
 
   // Tile size.
   $form['islandora_openseadragon_tile_size'] = array(
@@ -229,6 +238,11 @@ function islandora_openseadragon_admin($form, &$form_state) {
     '#element_validate' => array('element_validate_integer'),
     '#default_value' => variable_get('islandora_openseadragon_tile_overlap', '0'),
     '#description' => t('The number of pixels by which each tile will overlap adjacent ones.'),
+  );
+  $form['islandora_openseadragon_fit_to_aspect_ratio'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Constrain image to viewport'),
+    '#default_value' => variable_get('islandora_openseadragon_fit_to_aspect_ratio', FALSE),
   );
 
   // Actions.
@@ -257,7 +271,7 @@ function djatoka_base_url_validate($element, &$form_state, $form) {
   else {
     // Work around drupal_http_request's not handling relative URLs.
     if (strpos($url, '/') === 0) {
-      $url = $GLOBALS['base_url'] . $url;
+      $url = $GLOBALS['base_root'] . $url;
     }
 
     // Check that it's working with LOC's stable external JP2 image.
