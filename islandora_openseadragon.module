@@ -167,12 +167,13 @@ function islandora_openseadragon_preprocess_islandora_openseadragon_viewer(&$var
         'resourceUri' => $variables['uri'],
         'tileSize' => (int) variable_get('islandora_openseadragon_tile_size', '256'),
         'tileOverlap' => (int) variable_get('islandora_openseadragon_tile_overlap', '0'),
+        'fitToAspectRatio' => variable_get('islandora_openseadragon_fit_to_aspect_ratio', FALSE),
         'settings' => $settings,
       ),
     ), 'setting');
-  drupal_add_js("$module_path/js/islandora_openseadragon.js");
-  drupal_add_js("$library_path/openseadragon.js");
-  drupal_add_js("$module_path/js/djtilesource.js");
+  drupal_add_js("$library_path/openseadragon.js", array('weight' => -4));
+  drupal_add_js("$module_path/js/islandora_openseadragon.js", array('weight' => -3));
+  drupal_add_js("$module_path/js/djtilesource.js", array('weight' => -2));
   drupal_add_css("$module_path/css/islandora_openseadragon.theme.css");
 }
 
@@ -207,6 +208,7 @@ function islandora_openseadragon_get_settings() {
     'zoomPerScroll' => '1.2',
     'zoomPerSecond' => '2.0',
     'showNavigator' => TRUE,
+    'defaultZoomLevel' => '1.0',
   );
 }
 
